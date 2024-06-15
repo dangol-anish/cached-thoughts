@@ -8,7 +8,7 @@ import {
 } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
-import { emailLogin } from "../actions";
+import { signup } from "../actions";
 import { redirect } from "next/navigation";
 import { createClient } from "@/utils/supabase/server";
 import Link from "next/link";
@@ -26,16 +26,16 @@ export default async function Login({
   } = await supabase.auth.getUser();
 
   if (user) {
-    return redirect("/todos");
+    return redirect("/home");
   }
 
   return (
     <section className="h-[calc(100vh-57px)] flex justify-center items-center">
       <Card className="mx-auto max-w-sm">
         <CardHeader>
-          <CardTitle className="text-2xl">Login</CardTitle>
+          <CardTitle className="text-2xl">Sign Up</CardTitle>
           <CardDescription>
-            Enter your email below to login to your account
+            Enter your details to create a new account
           </CardDescription>
         </CardHeader>
         <CardContent className="flex flex-col gap-4">
@@ -77,8 +77,8 @@ export default async function Login({
                 {searchParams.message}
               </div>
             )}
-            <Button formAction={emailLogin} className="w-full">
-              Login
+            <Button formAction={signup} className="w-full">
+              Sign Up
             </Button>
           </form>
           {/* <OAuthButtons /> */}

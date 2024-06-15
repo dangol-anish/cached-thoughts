@@ -26,7 +26,7 @@ export default async function Login({
   } = await supabase.auth.getUser();
 
   if (user) {
-    return redirect("/todos");
+    return redirect("/home");
   }
 
   return (
@@ -46,7 +46,7 @@ export default async function Login({
                 id="email"
                 name="email"
                 type="email"
-                placeholder="m@example.com"
+                placeholder="anishdangol@gmail.com"
                 required
               />
             </div>
