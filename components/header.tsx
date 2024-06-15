@@ -1,7 +1,15 @@
+import { signOut } from "@/app/auth/actions";
 import { Button } from "@/components/ui/button";
+import { createClient } from "@/utils/supabase/server";
 import Link from "next/link";
 
 export default async function Header() {
+  const supabase = await createClient();
+
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
   return (
     <header className="z-10 sticky top-0 w-full border-b border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container flex h-14 max-w-screen-2xl items-center">
@@ -12,10 +20,19 @@ export default async function Header() {
           <Link href="/todos">Home</Link>
         </nav>
         <div className="flex flex-1 items-center justify-end space-x-2">
-          <Button asChild>
-            <Link href="/auth/login">Login</Link>
-          </Button>
-          <Link href="/auth/signup">Get Started</Link>
+          {user !== null ? (
+            <form action={signOut} className="flex items-center gap-4">
+              <p>{user.user_metadata.username}</p>
+              <Button>Sign Out</Button>
+            </form>
+          ) : (
+            <div className="flex items-center gap-4">
+              <Button asChild>
+                <Link href="/auth/login">Login</Link>
+              </Button>
+              <Link href="/auth/signup">Get Started</Link>
+            </div>
+          )}
         </div>
       </div>
     </header>

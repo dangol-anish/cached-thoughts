@@ -8,46 +8,69 @@ import { createClient } from "@/utils/supabase/server";
 export async function emailLogin(formData: FormData) {
   const supabase = createClient();
 
-  const data = {
-    email: formData.get("email") as string,
-    password: formData.get("password") as string,
-  };
+  try {
+    const data = {
+      email: formData.get("email") as string,
+      password: formData.get("password") as string,
+    };
 
-  const { error } = await supabase.auth.signInWithPassword(data);
+    const { error } = await supabase.auth.signInWithPassword(data);
 
-  if (error) {
-    redirect("/auth/login?message=Could not authenticate user");
+    if (error) {
+      throw error; // Directly throw the Supabase error
+    }
+
+    revalidatePath("/", "layout");
+    redirect("/home");
+  } catch (error: unknown) {
+    const errorMessage =
+      error instanceof Error ? error.message : "An unknown error occurred";
+    redirect(`/auth/login?message=${encodeURIComponent(errorMessage)}`);
   }
-
-  revalidatePath("/", "layout");
-  redirect("/home");
 }
 
 export async function signup(formData: FormData) {
   const supabase = createClient();
 
-  // type-casting here for convenience
-  // in practice, you should validate your inputs
-  const data = {
-    options: {
-      data: {
-        username: formData.get("username") as string,
+  try {
+    // type-casting here for convenience
+    // in practice, you should validate your inputs
+    const data = {
+      options: {
+        data: {
+          username: formData.get("username") as string,
+        },
       },
-    },
-    email: formData.get("email") as string,
-    password: formData.get("password") as string,
-  };
+      email: formData.get("email") as string,
+      password: formData.get("password") as string,
+    };
 
-  const { error } = await supabase.auth.signUp(data);
+    const { error } = await supabase.auth.signUp(data);
 
-  if (error) {
-    redirect(
-      "/auth/signup?message=Unable to register the user. Please try again."
-    );
+    if (error) {
+      throw error; // Directly throw the Supabase error
+    }
+
+    await supabase.auth.signOut();
+
+    revalidatePath("/", "layout");
+    redirect("/auth/login");
+  } catch (error: unknown) {
+    const errorMessage =
+      error instanceof Error ? error.message : "An unknown error occurred";
+    redirect(`/auth/signup?message=${encodeURIComponent(errorMessage)}`);
   }
+}
 
-  supabase.auth.signOut();
+export async function signOut() {
+  const supabase = createClient();
 
-  revalidatePath("/", "layout");
-  redirect("/auth/login");
+  try {
+    await supabase.auth.signOut();
+    redirect("/auth/login");
+  } catch (error: unknown) {
+    const errorMessage =
+      error instanceof Error ? error.message : "An unknown error occurred";
+    redirect(`/auth/login?message=${encodeURIComponent(errorMessage)}`);
+  }
 }
