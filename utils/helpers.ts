@@ -9,7 +9,7 @@ export const getURL = (path: string = "") => {
         process.env.NEXT_PUBLIC_VERCEL_URL.trim() !== ""
       ? process.env.NEXT_PUBLIC_VERCEL_URL
       : // If neither is set, default to localhost for local development.
-        "http://localhost:3000/auth";
+        "http://localhost:3000/";
 
   // Trim the URL and remove trailing slash if exists.
   url = url.replace(/\/+$/, "");
@@ -18,7 +18,8 @@ export const getURL = (path: string = "") => {
   // Ensure path starts without a slash to avoid double slashes in the final URL.
   path = path.replace(/^\/+/, "");
 
+  console.log(path);
+
   // Concatenate the URL and the path.
-  // Always redirect to login path
-  return `${url}/login?message=Could not log in with Github provider`;
+  return path ? `${url}/${path}` : url;
 };

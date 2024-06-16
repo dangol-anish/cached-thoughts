@@ -12,7 +12,7 @@ import { signup } from "../actions";
 import { redirect } from "next/navigation";
 import { createClient } from "@/utils/supabase/server";
 import Link from "next/link";
-// import { OAuthButtons } from "./oauth-signin";
+import { OAuthButtons } from "@/components/github-oauth";
 
 export default async function Login({
   searchParams,
@@ -81,7 +81,7 @@ export default async function Login({
               Sign Up
             </Button>
           </form>
-          {/* <OAuthButtons /> */}
+          <OAuthButtons />
           <div className="text-center text-sm">
             Already have an account?{" "}
             {/* <button formAction={signup} form="login-form" className="underline">

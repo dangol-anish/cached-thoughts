@@ -92,7 +92,7 @@ export async function oAuthSignIn(provider: Provider) {
   });
 
   if (error) {
-    redirect("/auth/login?message=Could not authenticate user");
+    return redirect("/auth/login?message=Could not authenticate user");
   }
 
   return redirect(data.url);
