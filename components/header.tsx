@@ -22,7 +22,7 @@ export default async function Header() {
         <div className="flex flex-1 items-center justify-end space-x-2">
           {user !== null ? (
             <form action={signOut} className="flex items-center gap-4">
-              <p>{user.user_metadata.username}</p>
+              <p>{user.user_metadata.user_name}</p>
               <Button>Sign Out</Button>
             </form>
           ) : (
