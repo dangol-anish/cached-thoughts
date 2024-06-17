@@ -11,6 +11,7 @@ import {
   CommandShortcut,
 } from "@/components/ui/command";
 import { menuList } from "./MenuList";
+import Link from "next/link";
 
 export default function Sidebar() {
   return (
@@ -25,8 +26,11 @@ export default function Sidebar() {
                 <CommandGroup key={key} heading={menu.group}>
                   {menu.items.map((options: any, optionKey: number) => (
                     <CommandItem key={optionKey}>
-                      {options.icon}
-                      {options.text}
+                      <Link href={options.link}>
+                        {" "}
+                        {options.icon}
+                        {options.text}
+                      </Link>
                     </CommandItem>
                   ))}
                 </CommandGroup>

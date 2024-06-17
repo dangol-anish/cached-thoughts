@@ -38,7 +38,7 @@ export const menuList = [
         text: "Notes",
       },
       {
-        link: "/Resources",
+        link: "/resources",
         text: "Resources",
       },
       {
