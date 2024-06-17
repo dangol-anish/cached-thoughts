@@ -16,10 +16,8 @@ export default function Sidebar() {
   return (
     <>
       <div className="flex flex-col w-[300px] min-w-[300px] border-r min-h-screen p-4">
-        <div>
-          <UserItem />
-        </div>
-        <div className="grow">
+        <div className=""></div>
+        <div className="h-full flex flex-grow">
           <Command>
             <CommandList>
               <CommandEmpty>No results found.</CommandEmpty>
@@ -36,7 +34,10 @@ export default function Sidebar() {
             </CommandList>
           </Command>
         </div>
-        <div>Settings</div>
+        <div className="flex-grow-0">
+          {" "}
+          <UserItem />
+        </div>
       </div>
     </>
   );
