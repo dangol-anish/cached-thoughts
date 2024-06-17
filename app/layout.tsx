@@ -7,6 +7,7 @@ const inter = Inter({ subsets: ["latin"] });
 
 import "./globals.css";
 import Header from "@/components/header";
+import SidebarSm from "./components/SidebarSm";
 
 const defaultUrl = process.env.VERCEL_URL
   ? `https://${process.env.VERCEL_URL}`
@@ -29,6 +30,7 @@ export default function RootLayout({
         {/* <Header /> */}
         <main className="flex">
           <Sidebar />
+          <SidebarSm />
           {children}
         </main>
       </body>

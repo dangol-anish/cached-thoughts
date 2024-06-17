@@ -12,33 +12,27 @@ import {
 } from "@/components/ui/command";
 import { menuList } from "./MenuList";
 import Link from "next/link";
-import { Library } from "lucide-react";
+import { ArrowRight, Library, LogOut, PanelLeftOpen } from "lucide-react";
 
-export default function Sidebar() {
+export default function SidebarSm() {
   return (
     <>
-      <div className="hidden md:flex flex-col w-[300px] min-w-[300px] border-r min-h-screen ">
+      <div className="flex md:hidden flex-col w-[50px] min-w-[50px] border-r min-h-screen  ">
         <div className="">
-          <div className="flex  gap-2 px-6 py-4">
-            <Library />
-
-            <p>cachedThoughts</p>
+          <div className="flex justify-center py-4">
+            <PanelLeftOpen size={20} />
           </div>
         </div>
-        <div className="h-full flex flex-grow px-4">
+        <div className="grow ">
           <Command>
             <CommandList>
-              <CommandEmpty>No results found.</CommandEmpty>
+              <CommandEmpty>...</CommandEmpty>
               {menuList.map((menu: any, key: number) => (
-                <CommandGroup key={key} heading={menu.group}>
+                <CommandGroup className="pb-4" key={key}>
                   {menu.items.map((options: any, optionKey: number) => (
                     <CommandItem key={optionKey}>
-                      <Link
-                        className="flex gap-2 items-center"
-                        href={options.link}
-                      >
-                        <p>{options.icon}</p>
-                        <p>{options.text}</p>
+                      <Link className="flex justify-center" href={options.link}>
+                        {options.icon}
                       </Link>
                     </CommandItem>
                   ))}
@@ -47,9 +41,9 @@ export default function Sidebar() {
             </CommandList>
           </Command>
         </div>
-        <div className="">
+        <div className="border-t-[1px] py-2 outline-slate-400  flex justify-center">
           {" "}
-          <UserItem />
+          <LogOut size={20} />
         </div>
       </div>
     </>

@@ -10,7 +10,7 @@ const UserItem: NextPage<Props> = async ({}) => {
     data: { user },
   } = await supabase.auth.getUser();
   return (
-    <div className="outline rounded-sm p-1 outline-slate-400">
+    <div className="border-t-[1px] p-1 outline-slate-400">
       <p>{user?.user_metadata.user_name}</p>
       <p>{user?.email}</p>
     </div>
