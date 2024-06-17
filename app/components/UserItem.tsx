@@ -1,6 +1,8 @@
 import { createClient } from "@/utils/supabase/server";
 import { LogOut } from "lucide-react";
 import { NextPage } from "next";
+import { signOut } from "../auth/actions";
+import { Button } from "@/components/ui/button";
 
 interface Props {}
 
@@ -17,7 +19,11 @@ const UserItem: NextPage<Props> = async ({}) => {
         <p>{user?.user_metadata.user_name}</p>
         <p className="text-[12px] text-slate-500">{user?.email}</p>
       </div>
-      <LogOut size={20} />
+      <form action={signOut}>
+        <Button className="bg-white text-slate-950 p-0 hover:bg-white">
+          <LogOut size={20} />
+        </Button>
+      </form>
     </div>
   );
 };

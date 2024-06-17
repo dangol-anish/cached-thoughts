@@ -1,13 +1,10 @@
-import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import Sidebar from "./components/Sidebar";
+import SidebarSm from "./components/SidebarSm";
+import { createClient } from "@/utils/supabase/server";
 
 const inter = Inter({ subsets: ["latin"] });
-
-import "./globals.css";
-import Header from "@/components/header";
-import SidebarSm from "./components/SidebarSm";
 
 const defaultUrl = process.env.VERCEL_URL
   ? `https://${process.env.VERCEL_URL}`
@@ -19,19 +16,28 @@ export const metadata = {
   description: "An example of Supabase, Auth and NextJS server actions",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const supabase = createClient();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
   return (
     <html lang="en" className={inter.className}>
       <body className="sticky top-0 bg-background text-foreground">
-        {/* <Header /> */}
         <main className="flex">
-          <Sidebar />
-          <SidebarSm />
-          {children}
+          {user !== null ? (
+            <div>
+              <Sidebar />
+
+              <SidebarSm />
+            </div>
+          ) : null}
+
+          <div className="">{children}</div>
         </main>
       </body>
     </html>

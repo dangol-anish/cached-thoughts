@@ -22,14 +22,14 @@ export const menuList = [
     group: "General",
     items: [
       {
-        link: "/search",
-        text: "Search",
-        icon: <Search size={20} />,
-      },
-      {
         link: "/home",
         text: "Home",
         icon: <Home size={20} />,
+      },
+      {
+        link: "/search",
+        text: "Search",
+        icon: <Search size={20} />,
       },
       {
         link: "/settings",
