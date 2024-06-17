@@ -75,16 +75,15 @@
   }
 }
 
-/* Define the custom font using @font-face
+/*
 @font-face {
   font-family: "Virgil";
   src: url("../asset/Virgil.woff2") format("woff2");
 }
 
-/* Apply the custom font */
-/*
 @layer base {
   * {
     font-family: "Virgil", sans-serif;
   }
-} */
+}
+*/

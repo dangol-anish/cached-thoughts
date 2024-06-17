@@ -72,8 +72,8 @@ export const menuList = [
         icon: <Book size={20} />,
       },
       {
-        link: "/answerBank",
-        text: "Answer Bank",
+        link: "/flashcard",
+        text: "Flash Card",
         icon: <FileQuestion size={20} />,
       },
     ],

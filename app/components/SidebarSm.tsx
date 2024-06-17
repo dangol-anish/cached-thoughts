@@ -1,15 +1,7 @@
-import {
-  Command,
-  CommandEmpty,
-  CommandGroup,
-  CommandItem,
-  CommandList,
-} from "@/components/ui/command";
-import { menuList } from "./MenuList";
-import Link from "next/link";
 import { Library, LogOut, PanelLeftOpen } from "lucide-react";
 import { signOut } from "../auth/actions";
 import { Button } from "@/components/ui/button";
+import { SidebarMenuSm } from "./SidebarMenuSm";
 
 export default function SidebarSm() {
   return (
@@ -18,22 +10,7 @@ export default function SidebarSm() {
         <Library size={20} />
       </div>
       <div className="grow">
-        <Command>
-          <CommandList>
-            <CommandEmpty>...</CommandEmpty>
-            {menuList.map((menu: any, key: number) => (
-              <CommandGroup className="pb-4" key={key}>
-                {menu.items.map((options: any, optionKey: number) => (
-                  <CommandItem key={optionKey}>
-                    <Link className="flex justify-center" href={options.link}>
-                      {options.icon}
-                    </Link>
-                  </CommandItem>
-                ))}
-              </CommandGroup>
-            ))}
-          </CommandList>
-        </Command>
+        <SidebarMenuSm />
       </div>
       <form
         action={signOut}

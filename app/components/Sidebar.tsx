@@ -9,7 +9,7 @@ export default function Sidebar() {
       <div className="px-6 flex items-center justify-between">
         <div className="flex gap-1 py-4 items-center  justify-center">
           <Library size={24} />
-          <p className="text-[20px]">cachedThoughts</p>
+          <p className="text-[20px]">CachedThoughts</p>
         </div>
       </div>
       <div className="h-full flex flex-grow px-4">
