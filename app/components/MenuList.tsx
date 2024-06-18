@@ -47,14 +47,9 @@ export const menuList = [
         icon: <ClipboardType size={20} />,
       },
       {
-        link: "/reminder",
-        text: "Reminder",
-        icon: <Calendar size={20} />,
-      },
-      {
-        link: "/pomodoro",
-        text: "Pomodoro",
-        icon: <Timer size={20} />,
+        link: "/journal",
+        text: "Journal",
+        icon: <Book size={20} />,
       },
       {
         link: "/notes",
@@ -62,20 +57,27 @@ export const menuList = [
         icon: <Notebook size={20} />,
       },
       {
-        link: "/resources",
-        text: "Resources",
-        icon: <Folder size={20} />,
+        link: "/pomodoro",
+        text: "Pomodoro",
+        icon: <Timer size={20} />,
       },
       {
-        link: "/journal",
-        text: "Journal",
-        icon: <Book size={20} />,
+        link: "/reminder",
+        text: "Reminder",
+        icon: <Calendar size={20} />,
       },
-      {
-        link: "/flashcard",
-        text: "Flash Card",
-        icon: <FileQuestion size={20} />,
-      },
+
+      // {
+      //   link: "/resources",
+      //   text: "Resources",
+      //   icon: <Folder size={20} />,
+      // },
+
+      // {
+      //   link: "/flashcard",
+      //   text: "Flash Card",
+      //   icon: <FileQuestion size={20} />,
+      // },
     ],
   },
   {
