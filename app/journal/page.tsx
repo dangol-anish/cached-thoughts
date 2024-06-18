@@ -3,6 +3,8 @@ import { createClient } from "@/utils/supabase/server";
 import { redirect } from "next/navigation";
 import { Separator } from "@/components/ui/separator";
 import { Book } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { SquarePen } from "lucide-react";
 
 interface Props {}
 
@@ -16,14 +18,26 @@ const Page: NextPage<Props> = async ({}) => {
   if (!user) {
     return redirect("/auth/login");
   }
+
   return (
     <div className="h-full">
-      <div className="flex items-center gap-2 justify-center pb-4">
-        <Book size={20} />
-        <span className="h-[10%] text-[20px]">Journal</span>
+      <div className="flex items-center justify-between pb-4">
+        <div className="flex flex-col items-start    items ">
+          <div className="flex items-center gap-2 ">
+            <Book size={28} />
+            <p className="h-[10%] text-[28px]">Journal</p>
+          </div>
+
+          <span className="text-[14px] text-slate-700 ">
+            Reflect upon your day
+          </span>
+        </div>
+        <Button className="p-2.5">
+          <SquarePen />
+        </Button>
       </div>
       <Separator />
-      <div className="h-[90%] flex justify-center items-center">hello</div>
+      <div className="h-[90%] flex justify-center items-center"></div>
     </div>
   );
 };
