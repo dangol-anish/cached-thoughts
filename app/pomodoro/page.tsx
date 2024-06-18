@@ -1,8 +1,9 @@
 import { NextPage } from "next";
 import { createClient } from "@/utils/supabase/server";
 import { redirect } from "next/navigation";
-
+import { Separator } from "@/components/ui/separator";
 import { TimerCard } from "../components/pomodoro/TimerCard";
+import { Timer } from "lucide-react";
 
 interface Props {}
 
@@ -19,8 +20,12 @@ const Page: NextPage<Props> = async ({}) => {
   return (
     <>
       <div className="h-full">
-        <p className="h-[20%] text-[20px]">Pomodoro</p>
-        <div className="h-[80%] flex justify-center ">
+        <div className="flex items-center gap-2 justify-center pb-4">
+          <Timer />
+          <span className="h-[10%] text-[20px]">Pomodoro</span>
+        </div>
+        <Separator />
+        <div className="h-[90%] flex justify-center items-center">
           <TimerCard />
         </div>
       </div>
