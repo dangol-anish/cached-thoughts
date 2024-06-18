@@ -23,7 +23,7 @@ import { Label } from "@/components/ui/label";
 export function TimerCard() {
   const [isActive, setIsActive] = useState(false);
   const [isBreak, setIsBreak] = useState(false);
-  const [time, setTime] = useState(5); // 25 minutes in seconds
+  const [time, setTime] = useState(1500);
   const intervalRef = useRef<number | null>(null);
   const [newWorkTime, setNewWorkTime] = useState(isBreak ? 300 : 1500);
   const [newBreakTime, setNewBreakTime] = useState(300);
@@ -168,7 +168,6 @@ export function TimerCard() {
         <Button className="" onClick={handleStartPause}>
           {isActive ? "Pause" : "Start"}
         </Button>
-        {/* <Button onClick={play}>Boop</Button> */}
       </CardFooter>
     </Card>
   );
