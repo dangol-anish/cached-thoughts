@@ -9,7 +9,8 @@ import {
 import { menuList } from "./MenuList";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-export async function SidebarMenuSm() {
+
+export function SidebarMenuSm() {
   const pathname = usePathname();
   return (
     <Command>
@@ -18,12 +19,12 @@ export async function SidebarMenuSm() {
         {menuList.map((menu: any, key: number) => (
           <CommandGroup className="pb-4" key={key}>
             {menu.items.map((options: any, optionKey: number) => (
-              <Link href={options.link}>
+              <Link key={optionKey} href={options.link}>
                 <CommandItem
+                  key={optionKey}
                   className={`flex gap-2 items-center hover:cursor-pointer  ${
                     pathname === options.link ? "bg-slate-200 rounded-sm" : ""
                   }`}
-                  key={optionKey}
                 >
                   {options.icon}
                 </CommandItem>
