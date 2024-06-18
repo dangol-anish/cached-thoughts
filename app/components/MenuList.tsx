@@ -26,11 +26,11 @@ export const menuList = [
         text: "Home",
         icon: <Home size={20} />,
       },
-      {
-        link: "/search",
-        text: "Search",
-        icon: <Search size={20} />,
-      },
+      // {
+      //   link: "/search",
+      //   text: "Search",
+      //   icon: <Search size={20} />,
+      // },
       {
         link: "/settings",
         text: "Settings",
