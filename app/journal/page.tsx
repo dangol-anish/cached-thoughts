@@ -3,8 +3,8 @@ import { createClient } from "@/utils/supabase/server";
 import { redirect } from "next/navigation";
 import { Separator } from "@/components/ui/separator";
 import { Book } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { SquarePen } from "lucide-react";
+
+import { AddJournal } from "../components/journal/AddJournal";
 
 interface Props {}
 
@@ -32,9 +32,8 @@ const Page: NextPage<Props> = async ({}) => {
             Reflect upon your day
           </span>
         </div>
-        <Button className="p-2.5">
-          <SquarePen />
-        </Button>
+
+        <AddJournal />
       </div>
       <Separator />
       <div className="h-[90%] flex justify-center items-center"></div>
