@@ -37,7 +37,7 @@ const Page: NextPage<Props> = async ({}) => {
         <AddJournal />
       </div>
       <Separator />
-      <div className="h-[90%] flex justify-center ">
+      <div className="h-[90%] flex w-full ">
         <JournalList />
       </div>
     </div>
