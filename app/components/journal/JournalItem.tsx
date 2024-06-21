@@ -22,6 +22,15 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 
 import { EllipsisVertical } from "lucide-react";
 import { moodConverter } from "@/utils/moodConverter";
@@ -30,6 +39,8 @@ import { useFormStatus } from "react-dom";
 import { deleteJournal } from "@/app/journal/action";
 import { highlightShortener } from "@/utils/textShortener";
 import { titleShortener } from "@/utils/titleShortener";
+import { Button } from "@/components/ui/button";
+import { ScrollArea } from "@/components/ui/scroll-area";
 
 interface Journal {
   journal_id: number;
@@ -101,21 +112,40 @@ export function JournalCard({ journals }: { journals: Journal[] }) {
                   </TableCell>
                   <TableCell>{moodConverter(item.mood)}</TableCell>
                   <TableCell>
-                    <DropdownMenu>
-                      <DropdownMenuTrigger>
-                        <EllipsisVertical />
-                      </DropdownMenuTrigger>
-                      <DropdownMenuContent>
-                        <DropdownMenuItem>Show</DropdownMenuItem>
-                        <DropdownMenuItem>Edit</DropdownMenuItem>
-                        <DropdownMenuItem
-                          disabled={pending}
-                          onClick={() => handleDelete(item.journal_id)}
-                        >
-                          Delete
-                        </DropdownMenuItem>
-                      </DropdownMenuContent>
-                    </DropdownMenu>
+                    <Dialog>
+                      <DialogContent className="p-10">
+                        <DialogHeader>
+                          <DialogTitle className="flex">
+                            <ScrollArea className="h-[55px] mb-5">
+                              {item.journal_title}
+                            </ScrollArea>
+                          </DialogTitle>
+                          <DialogDescription>
+                            <ScrollArea className="h-[300px]">
+                              {item.highlight_of_the_day}
+                            </ScrollArea>
+                          </DialogDescription>
+                        </DialogHeader>
+                        <DialogFooter>{moodConverter(item.mood)}</DialogFooter>
+                      </DialogContent>
+                      <DropdownMenu>
+                        <DropdownMenuTrigger>
+                          <EllipsisVertical />
+                        </DropdownMenuTrigger>
+                        <DropdownMenuContent>
+                          <DialogTrigger className="w-full">
+                            <DropdownMenuItem>Show</DropdownMenuItem>
+                          </DialogTrigger>
+                          <DropdownMenuItem>Edit</DropdownMenuItem>
+                          <DropdownMenuItem
+                            disabled={pending}
+                            onClick={() => handleDelete(item.journal_id)}
+                          >
+                            Delete
+                          </DropdownMenuItem>
+                        </DropdownMenuContent>
+                      </DropdownMenu>
+                    </Dialog>
                   </TableCell>
                 </TableRow>
               ))}
