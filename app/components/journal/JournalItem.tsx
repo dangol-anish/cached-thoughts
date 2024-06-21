@@ -3,9 +3,7 @@ import { ReactNode, useState } from "react";
 import {
   Pagination,
   PaginationContent,
-  PaginationEllipsis,
   PaginationItem,
-  PaginationLink,
   PaginationNext,
   PaginationPrevious,
 } from "@/components/ui/pagination";
@@ -22,17 +20,16 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
 import { EllipsisVertical } from "lucide-react";
 import { moodConverter } from "@/utils/moodConverter";
 import { formatDate } from "@/utils/formatDate";
-import { Button } from "@/components/ui/button";
 import { useFormStatus } from "react-dom";
 import { deleteJournal } from "@/app/journal/action";
+import { highlightShortener } from "@/utils/textShortener";
+import { titleShortener } from "@/utils/titleShortener";
 
 interface Journal {
   journal_id: number;
@@ -73,7 +70,6 @@ export function JournalCard({ journals }: { journals: Journal[] }) {
   const handleDelete = async (id: number) => {
     try {
       await deleteJournal(id);
-      // You might want to update the state here to reflect the deletion
     } catch (error) {
       console.error("Failed to delete journal", error);
     }
@@ -81,55 +77,62 @@ export function JournalCard({ journals }: { journals: Journal[] }) {
 
   return (
     <>
-      <Table className="w-full">
-        <TableHeader>
-          <TableRow>
-            <TableHead className="w-[20]%">Date</TableHead>
-            <TableHead className="w-[15]%">Title</TableHead>
-            <TableHead className="w-[45%]">Highlight Of the Day</TableHead>
-            <TableHead className="w-[10%]">Mood</TableHead>
-            <TableHead className="w-[5%]"></TableHead>
-          </TableRow>
-        </TableHeader>
-        <TableBody>
-          {journals.slice(startIndex, endIndex).map((item: Journal) => (
-            <TableRow key={item.journal_id}>
-              <TableCell>{formatDate(item.inserted_at)}</TableCell>
-              <TableCell>{item.journal_title}</TableCell>
-              <TableCell>{item.highlight_of_the_day}</TableCell>
-              <TableCell>{moodConverter(item.mood)}</TableCell>
-              <TableCell></TableCell>
-              <TableCell>
-                <DropdownMenu>
-                  <DropdownMenuTrigger>
-                    <EllipsisVertical />
-                  </DropdownMenuTrigger>
-                  <DropdownMenuContent>
-                    <DropdownMenuItem>Show</DropdownMenuItem>
-                    <DropdownMenuItem>Edit</DropdownMenuItem>{" "}
-                    <DropdownMenuItem
-                      disabled={pending}
-                      onClick={() => handleDelete(item.journal_id)}
-                    >
-                      Delete
-                    </DropdownMenuItem>
-                  </DropdownMenuContent>
-                </DropdownMenu>
-              </TableCell>
-            </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-      <Pagination>
-        <PaginationContent>
-          <PaginationItem>
-            <PaginationPrevious onClick={handlePrevious} />
-          </PaginationItem>
-          <PaginationItem>
-            <PaginationNext onClick={handleNext} />
-          </PaginationItem>
-        </PaginationContent>
-      </Pagination>
+      {journals.length === 0 ? (
+        <p className="text-center my-4">There are no journals to display.</p>
+      ) : (
+        <>
+          <Table className="w-full">
+            <TableHeader>
+              <TableRow>
+                <TableHead className="w-[20%]">Date</TableHead>
+                <TableHead className="w-[15%]">Title</TableHead>
+                <TableHead className="w-[45%]">Highlight Of the Day</TableHead>
+                <TableHead className="w-[10%]">Mood</TableHead>
+                <TableHead className="w-[5%]"></TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {journals.slice(startIndex, endIndex).map((item: Journal) => (
+                <TableRow key={item.journal_id}>
+                  <TableCell>{formatDate(item.inserted_at)}</TableCell>
+                  <TableCell>{titleShortener(item.journal_title)}</TableCell>
+                  <TableCell>
+                    {highlightShortener(item.highlight_of_the_day)}
+                  </TableCell>
+                  <TableCell>{moodConverter(item.mood)}</TableCell>
+                  <TableCell>
+                    <DropdownMenu>
+                      <DropdownMenuTrigger>
+                        <EllipsisVertical />
+                      </DropdownMenuTrigger>
+                      <DropdownMenuContent>
+                        <DropdownMenuItem>Show</DropdownMenuItem>
+                        <DropdownMenuItem>Edit</DropdownMenuItem>
+                        <DropdownMenuItem
+                          disabled={pending}
+                          onClick={() => handleDelete(item.journal_id)}
+                        >
+                          Delete
+                        </DropdownMenuItem>
+                      </DropdownMenuContent>
+                    </DropdownMenu>
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+          <Pagination>
+            <PaginationContent>
+              <PaginationItem>
+                <PaginationPrevious onClick={handlePrevious} />
+              </PaginationItem>
+              <PaginationItem>
+                <PaginationNext onClick={handleNext} />
+              </PaginationItem>
+            </PaginationContent>
+          </Pagination>
+        </>
+      )}
     </>
   );
 }
