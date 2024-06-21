@@ -5,6 +5,7 @@ import { Separator } from "@/components/ui/separator";
 import { Book } from "lucide-react";
 
 import { AddJournal } from "../components/journal/AddJournal";
+import { JournalList } from "../components/journal/JournalList";
 
 interface Props {}
 
@@ -36,7 +37,9 @@ const Page: NextPage<Props> = async ({}) => {
         <AddJournal />
       </div>
       <Separator />
-      <div className="h-[90%] flex justify-center items-center"></div>
+      <div className="h-[90%] flex justify-center ">
+        <JournalList />
+      </div>
     </div>
   );
 };

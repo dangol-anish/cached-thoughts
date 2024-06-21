@@ -97,11 +97,7 @@ function FormContent() {
   );
 }
 
-export function AddJournal({
-  optimisticUpdate,
-}: {
-  optimisticUpdate: JournalOptimisticUpdate;
-}) {
+export function AddJournal() {
   const formRef = useRef<HTMLFormElement>(null);
   const [open, setOpen] = useState(false);
   return (
