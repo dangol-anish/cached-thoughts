@@ -37,3 +37,27 @@ export async function addJournal(formData: FormData) {
 
   revalidatePath("/journal");
 }
+
+export async function deleteJournal(journal_id: number) {
+  const supabase = createClient();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  console.log(user);
+
+  if (!user) {
+    throw new Error("User is not logged in");
+  }
+
+  const { error } = await supabase.from("journal").delete().match({
+    user_id: user.id,
+    journal_id: journal_id,
+  });
+
+  if (error) {
+    throw new Error(error.message);
+  }
+
+  revalidatePath("/journal");
+}

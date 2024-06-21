@@ -30,6 +30,9 @@ import {
 import { EllipsisVertical } from "lucide-react";
 import { moodConverter } from "@/utils/moodConverter";
 import { formatDate } from "@/utils/formatDate";
+import { Button } from "@/components/ui/button";
+import { useFormStatus } from "react-dom";
+import { deleteJournal } from "@/app/journal/action";
 
 interface Journal {
   journal_id: number;
@@ -48,6 +51,8 @@ export function JournalItem({ journal }: { journal: Journal[] }) {
 }
 
 export function JournalCard({ journals }: { journals: Journal[] }) {
+  const { pending } = useFormStatus();
+
   const rowsPerPage = 8;
   const [startIndex, setStartIndex] = useState(0);
 
@@ -62,6 +67,15 @@ export function JournalCard({ journals }: { journals: Journal[] }) {
   const handleNext = () => {
     if (endIndex < journals.length) {
       setStartIndex(startIndex + rowsPerPage);
+    }
+  };
+
+  const handleDelete = async (id: number) => {
+    try {
+      await deleteJournal(id);
+      // You might want to update the state here to reflect the deletion
+    } catch (error) {
+      console.error("Failed to delete journal", error);
     }
   };
 
@@ -84,16 +98,21 @@ export function JournalCard({ journals }: { journals: Journal[] }) {
               <TableCell>{item.journal_title}</TableCell>
               <TableCell>{item.highlight_of_the_day}</TableCell>
               <TableCell>{moodConverter(item.mood)}</TableCell>
+              <TableCell></TableCell>
               <TableCell>
                 <DropdownMenu>
                   <DropdownMenuTrigger>
-                    {" "}
                     <EllipsisVertical />
                   </DropdownMenuTrigger>
                   <DropdownMenuContent>
                     <DropdownMenuItem>Show</DropdownMenuItem>
-                    <DropdownMenuItem>Edit</DropdownMenuItem>
-                    <DropdownMenuItem>Delete</DropdownMenuItem>
+                    <DropdownMenuItem>Edit</DropdownMenuItem>{" "}
+                    <DropdownMenuItem
+                      disabled={pending}
+                      onClick={() => handleDelete(item.journal_id)}
+                    >
+                      Delete
+                    </DropdownMenuItem>
                   </DropdownMenuContent>
                 </DropdownMenu>
               </TableCell>
