@@ -34,8 +34,15 @@ import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { EditJournal } from "./EditJournal";
 import { ShowJournal } from "./ShowJournal";
-import { Dialog } from "@radix-ui/react-dialog";
-
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 interface Journal {
   journal_id: number;
   journal_title: string;
@@ -53,6 +60,9 @@ export function JournalItem({ journal }: { journal: Journal[] }) {
 }
 
 export function JournalCard({ journals }: { journals: Journal[] }) {
+  const [isShowOpen, setIsShowOpen] = useState(false);
+  const [isEditOpen, setIsEditOpen] = useState(false);
+
   const { pending } = useFormStatus();
 
   const rowsPerPage = 8;
@@ -110,13 +120,25 @@ export function JournalCard({ journals }: { journals: Journal[] }) {
                       <DropdownMenuTrigger>
                         <EllipsisVertical />
                       </DropdownMenuTrigger>
-                      <DropdownMenuContent>
-                        <ShowJournal item={item} />
+                      <DropdownMenuContent className="flex flex-col text-sm">
+                        <ShowJournal
+                          isShowOpen={isShowOpen}
+                          setIsShowOpen={setIsShowOpen}
+                          isEditOpen={isEditOpen}
+                          setIsEditOpen={setIsEditOpen}
+                          item={item}
+                        />
 
-                        <DropdownMenuItem>
-                          <EditJournal />
-                        </DropdownMenuItem>
+                        <EditJournal
+                          item={item}
+                          isShowOpen={isShowOpen}
+                          setIsShowOpen={setIsShowOpen}
+                          isEditOpen={isEditOpen}
+                          setIsEditOpen={setIsEditOpen}
+                        />
+
                         <DropdownMenuItem
+                          className="hover:cursor-pointer"
                           disabled={pending}
                           onClick={() => handleDelete(item.journal_id)}
                         >
