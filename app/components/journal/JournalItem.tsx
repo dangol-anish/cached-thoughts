@@ -111,9 +111,7 @@ export function JournalCard({ journals }: { journals: Journal[] }) {
                         <EllipsisVertical />
                       </DropdownMenuTrigger>
                       <DropdownMenuContent>
-                        {/* <DropdownMenuItem> */}
                         <ShowJournal item={item} />
-                        {/* </DropdownMenuItem> */}
 
                         <DropdownMenuItem>
                           <EditJournal />
