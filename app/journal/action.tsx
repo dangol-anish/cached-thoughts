@@ -61,3 +61,43 @@ export async function deleteJournal(journal_id: number) {
 
   revalidatePath("/journal");
 }
+
+export async function updateJournal(formData: FormData) {
+  const supabase = createClient();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  const journalTitle = formData.get("journal_title") as string | null;
+  const highlightOfTheDay = formData.get("highlight_of_the_day") as
+    | string
+    | null;
+  const mood = formData.get("mood") as string | null;
+  const journalId = formData.get("journal_id") as number | null;
+
+  if (!journalTitle || !highlightOfTheDay || !mood) {
+    throw new Error("All fields are required");
+  }
+
+  if (!user) {
+    throw new Error("User is not logged in");
+  }
+
+  const { error } = await supabase
+    .from("journal")
+    .update({
+      journal_title: journalTitle,
+      highlight_of_the_day: highlightOfTheDay,
+      mood: mood,
+    })
+    .match({
+      user_id: user.id,
+      journal_id: journalId,
+    });
+
+  if (error) {
+    throw new Error("Error updating task");
+  }
+
+  revalidatePath("/journal");
+}

@@ -17,7 +17,7 @@ import { Button } from "@/components/ui/button";
 import { SquarePen } from "lucide-react";
 import { JournalOptimisticUpdate } from "./JournalList";
 import { useRef, useState } from "react";
-import { addJournal } from "@/app/journal/action";
+import { addJournal, updateJournal } from "@/app/journal/action";
 import { Bold, Italic, Underline } from "lucide-react";
 
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
@@ -28,6 +28,7 @@ import { moodConverter } from "@/utils/moodConverter";
 const wait = () => new Promise((resolve) => setTimeout(resolve, 300));
 
 interface JournalItem {
+  journal_id: number;
   journal_title: string;
   highlight_of_the_day: string;
   mood: string;
@@ -35,9 +36,24 @@ interface JournalItem {
 
 function FormContent({ item }: { item: JournalItem }) {
   const { pending } = useFormStatus();
-  const [value, setValue] = useState(item.mood);
+  const [formData, setFormData] = useState(item);
 
-  console.log(value);
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    const { name, value } = e.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
+
+  const handleMoodChange = (value: string) => {
+    setFormData((prevData) => ({
+      ...prevData,
+      mood: value,
+    }));
+  };
 
   return (
     <>
@@ -46,11 +62,12 @@ function FormContent({ item }: { item: JournalItem }) {
       </DialogHeader>
       <div className="grid gap-4 py-4">
         <div className="grid grid-cols-4 items-center gap-4">
-          <Label htmlFor="name" className="col-span-2">
+          <Label htmlFor="journal_title" className="col-span-2">
             Journal Title
           </Label>
           <Input
-            value={item.journal_title}
+            value={formData.journal_title}
+            onChange={handleChange}
             placeholder="Your Journal Title."
             id="journal_title"
             disabled={pending}
@@ -61,11 +78,12 @@ function FormContent({ item }: { item: JournalItem }) {
           />
         </div>
         <div className="grid grid-cols-4 items-center gap-4">
-          <Label htmlFor="username" className="col-span-2">
+          <Label htmlFor="highlight_of_the_day" className="col-span-2">
             Highlight of the Day
           </Label>
           <Textarea
-            value={item.highlight_of_the_day}
+            value={formData.highlight_of_the_day}
+            onChange={handleChange}
             className="col-span-4 resize-none h-48"
             placeholder="Type your highlight here."
             disabled={pending}
@@ -76,9 +94,9 @@ function FormContent({ item }: { item: JournalItem }) {
         </div>
         <ToggleGroup
           type="single"
-          value={value}
+          value={formData.mood}
           onValueChange={(value) => {
-            if (value) setValue(value);
+            if (value) handleMoodChange(value);
           }}
         >
           <ToggleGroupItem value="angry" aria-label="Toggle angry">
@@ -97,7 +115,8 @@ function FormContent({ item }: { item: JournalItem }) {
             <Laugh />
           </ToggleGroupItem>
         </ToggleGroup>
-        <input type="hidden" name="mood" value={value} />
+        <input type="hidden" name="mood" value={formData.mood} />
+        <input type="hidden" name="journal_id" value={formData.journal_id} />
       </div>
       <DialogFooter>
         <Button type="submit" disabled={pending}>
@@ -121,7 +140,7 @@ export function EditJournal({ item }: { item: JournalItem }) {
           <form
             ref={formRef}
             action={async (data) => {
-              await addJournal(data);
+              await updateJournal(data);
               wait().then(() => setOpen(false));
               formRef.current?.reset();
             }}
