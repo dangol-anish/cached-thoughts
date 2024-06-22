@@ -121,21 +121,9 @@ export function JournalCard({ journals }: { journals: Journal[] }) {
                         <EllipsisVertical />
                       </DropdownMenuTrigger>
                       <DropdownMenuContent className="flex flex-col text-sm">
-                        <ShowJournal
-                          isShowOpen={isShowOpen}
-                          setIsShowOpen={setIsShowOpen}
-                          isEditOpen={isEditOpen}
-                          setIsEditOpen={setIsEditOpen}
-                          item={item}
-                        />
+                        <ShowJournal item={item} />
 
-                        <EditJournal
-                          item={item}
-                          isShowOpen={isShowOpen}
-                          setIsShowOpen={setIsShowOpen}
-                          isEditOpen={isEditOpen}
-                          setIsEditOpen={setIsEditOpen}
-                        />
+                        <EditJournal item={item} />
 
                         <DropdownMenuItem
                           className="hover:cursor-pointer"

@@ -16,19 +16,7 @@ interface JournalItem {
   mood: string;
 }
 
-export function ShowJournal({
-  item,
-  isShowOpen,
-  isEditOpen,
-  setIsShowOpen,
-  setIsEditOpen,
-}: {
-  item: JournalItem;
-  isShowOpen: boolean;
-  isEditOpen: boolean;
-  setIsShowOpen: (open: boolean) => void;
-  setIsEditOpen: (open: boolean) => void;
-}) {
+export function ShowJournal({ item }: { item: JournalItem }) {
   return (
     <>
       <Dialog>
