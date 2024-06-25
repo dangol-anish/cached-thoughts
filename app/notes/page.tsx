@@ -3,6 +3,7 @@ import { createClient } from "@/utils/supabase/server";
 import { redirect } from "next/navigation";
 import { Notebook } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
+import { AddNotes } from "../components/notes/AddNotes";
 
 interface Props {}
 
@@ -30,6 +31,7 @@ const Page: NextPage<Props> = async ({}) => {
             Concise records of key information
           </span>
         </div>
+        <AddNotes />
       </div>
       <Separator />
     </div>
