@@ -1,5 +1,5 @@
 "use client";
-import Tiptap from "@/components/Tiptap";
+
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -53,7 +53,6 @@ function FormContent() {
             name="notes_description"
             required
           />
-          <Tiptap />
         </div>
       </div>
       <DialogFooter>
