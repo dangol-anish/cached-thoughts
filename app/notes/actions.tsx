@@ -6,4 +6,9 @@ import { revalidatePath } from "next/cache";
 
 export async function addNotes(formData: FormData) {
   const supabase = createClient();
+
+}
+
+export async function deleteJournal(){
+  
 }
