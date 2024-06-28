@@ -1,5 +1,6 @@
 "use client";
 
+import { addNotes } from "@/app/notes/actions";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -79,11 +80,11 @@ export function AddNotes() {
         <DialogContent className="sm:max-w-[425px]">
           <form
             ref={formRef}
-            // action={async (data) => {
-            //   await addJournal(data);
-            //   wait().then(() => setOpen(false));
-            //   formRef.current?.reset();
-            // }}
+            action={async (data) => {
+              await addNotes(data);
+              wait().then(() => setOpen(false));
+              formRef.current?.reset();
+            }}
           >
             <FormContent />
           </form>
