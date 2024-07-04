@@ -4,6 +4,7 @@ import { redirect } from "next/navigation";
 import { Notebook } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
 import { AddNotes } from "../components/notes/AddNotes";
+import { NotesList } from "../components/notes/NotesList";
 
 interface Props {}
 
@@ -34,6 +35,9 @@ const Page: NextPage<Props> = async ({}) => {
         <AddNotes />
       </div>
       <Separator />
+      <div className="h-[90%] flex w-full ">
+        <NotesList />
+      </div>
     </div>
   );
 };

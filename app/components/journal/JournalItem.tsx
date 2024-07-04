@@ -10,7 +10,6 @@ import {
 import {
   Table,
   TableBody,
-  TableCaption,
   TableCell,
   TableHead,
   TableHeader,
@@ -30,19 +29,9 @@ import { useFormStatus } from "react-dom";
 import { deleteJournal } from "@/app/journal/action";
 import { highlightShortener } from "@/utils/textShortener";
 import { titleShortener } from "@/utils/titleShortener";
-import { Button } from "@/components/ui/button";
-import { ScrollArea } from "@/components/ui/scroll-area";
 import { EditJournal } from "./EditJournal";
 import { ShowJournal } from "./ShowJournal";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
+
 interface Journal {
   journal_id: number;
   journal_title: string;
