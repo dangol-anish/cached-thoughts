@@ -1,7 +1,7 @@
-export function highlightShortener(highlight: string) {
+export function highlightShortener(highlight: string, length: number) {
   const words = highlight.split(" ");
-  if (words.length > 20) {
-    return words.slice(0, 10).join(" ") + "...";
+  if (words.length > length) {
+    return words.slice(0, length).join(" ") + "...";
   }
   return highlight;
 }

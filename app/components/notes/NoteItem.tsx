@@ -8,68 +8,59 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { Archive, CircleAlert, EllipsisVertical } from "lucide-react";
+import { highlightShortener } from "@/utils/textShortener";
 
-export function NoteItem() {
+interface Notes {
+  note_id: number;
+  note_title: string;
+  note_description: string;
+  is_important: boolean;
+  is_archived: boolean;
+  inserted_at: string;
+}
+
+export function NoteItem({ notes }: { notes: Notes[] }) {
   return (
     <form className="w-full">
-      <NoteCard />
+      <NoteCard notes={notes} />
     </form>
   );
 }
 
-export function NoteCard() {
+export function NoteCard({ notes }: { notes: Notes[] }) {
   const { pending } = useFormStatus();
 
   return (
-    <div className="w-full pt-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-      <Card>
-        <CardHeader>
-          <CardTitle>Card Title 1</CardTitle>
-          <CardDescription>Card Description</CardDescription>
-        </CardHeader>
-        <CardContent>
-          <p>Card Content</p>
-        </CardContent>
-        <CardFooter>
-          <p>Card Footer</p>
-        </CardFooter>
-      </Card>
-      <Card>
-        <CardHeader>
-          <CardTitle>Card Title 2</CardTitle>
-          <CardDescription>Card Description</CardDescription>
-        </CardHeader>
-        <CardContent>
-          <p>Card Content</p>
-        </CardContent>
-        <CardFooter>
-          <p>Card Footer</p>
-        </CardFooter>
-      </Card>
-      <Card>
-        <CardHeader>
-          <CardTitle>Card Title 3</CardTitle>
-          <CardDescription>Card Description</CardDescription>
-        </CardHeader>
-        <CardContent>
-          <p>Card Content</p>
-        </CardContent>
-        <CardFooter>
-          <p>Card Footer</p>
-        </CardFooter>
-      </Card>
-      <Card>
-        <CardHeader>
-          <CardTitle>Card Title 4</CardTitle>
-          <CardDescription>Card Description</CardDescription>
-        </CardHeader>
-        <CardContent>
-          <p>Card Content</p>
-        </CardContent>
-        <CardFooter>
-          <p>Card Footer</p>
-        </CardFooter>
-      </Card>
+    <div className="w-full py-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 ">
+      {notes.length === 0 ? (
+        <p>There are no notes to display.</p>
+      ) : (
+        notes.map((item: Notes) => (
+          <Card key={item.note_id} className="flex flex-col h-full mb-5">
+            <CardHeader>
+              <CardTitle className="flex justify-between items-center">
+                <span>{item.note_title}</span>
+                <span className="text-sm font-thin">
+                  {new Date(item.inserted_at).toLocaleDateString()}
+                </span>
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="flex-1 overflow-y-auto">
+              <CardDescription>
+                {highlightShortener(item.note_description, 30)}
+              </CardDescription>
+            </CardContent>
+            <CardFooter className="flex justify-end items-center gap-3">
+              <span>{item.is_important ? <CircleAlert size={18} /> : ""}</span>
+              <span>{item.is_archived ? <Archive size={18} /> : ""}</span>
+              <span>
+                <EllipsisVertical size={18} />
+              </span>
+            </CardFooter>
+          </Card>
+        ))
+      )}
     </div>
   );
 }

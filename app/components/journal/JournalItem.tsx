@@ -101,7 +101,7 @@ export function JournalCard({ journals }: { journals: Journal[] }) {
                   <TableCell>{formatDate(item.inserted_at)}</TableCell>
                   <TableCell>{titleShortener(item.journal_title)}</TableCell>
                   <TableCell>
-                    {highlightShortener(item.highlight_of_the_day)}
+                    {highlightShortener(item.highlight_of_the_day, 10)}
                   </TableCell>
                   <TableCell>{moodConverter(item.mood)}</TableCell>
                   <TableCell>

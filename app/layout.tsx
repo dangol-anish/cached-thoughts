@@ -27,17 +27,18 @@ export default async function RootLayout({
   } = await supabase.auth.getUser();
   return (
     <html lang="en" className={inter.className}>
-      <body className="sticky top-0 bg-background text-foreground">
-        <main className="flex">
+      <body className="bg-background text-foreground">
+        <main className="flex h-screen overflow-hidden">
           {user !== null ? (
-            <div>
+            <div className="flex-none h-full">
               <Sidebar />
-
               <SidebarSm />
             </div>
           ) : null}
 
-          <div className="h-screen w-full p-4">{children}</div>
+          <div className="flex-1 h-full overflow-y-auto p-4 ml-[50px]  md:ml-[var(--sidebar-width)]">
+            {children}
+          </div>
         </main>
       </body>
     </html>

@@ -5,7 +5,7 @@ import { SidebarMenuSm } from "./SidebarMenuSm";
 
 export default function SidebarSm() {
   return (
-    <div className="flex md:hidden flex-col w-[50px] min-w-[50px] border-r min-h-screen">
+    <div className="flex md:hidden flex-col w-[50px] min-w-[50px] border-r min-h-screen  h-full fixed">
       <div className="flex justify-center py-4">
         <Library size={20} />
       </div>
