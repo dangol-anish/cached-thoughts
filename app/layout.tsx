@@ -13,7 +13,7 @@ const defaultUrl = process.env.VERCEL_URL
 export const metadata = {
   metadataBase: new URL(defaultUrl),
   title: "CachedThoughts",
-  description: "An example of Supabase, Auth and NextJS server actions",
+  description: "test",
 };
 
 export default async function RootLayout({
