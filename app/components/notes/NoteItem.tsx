@@ -32,7 +32,7 @@ export function NoteCard({ notes }: { notes: Notes[] }) {
   const { pending } = useFormStatus();
 
   return (
-    <div className="w-full py-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 ">
+    <div className="w-full pb-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 ">
       {notes.length === 0 ? (
         <p>There are no notes to display.</p>
       ) : (

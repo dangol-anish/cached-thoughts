@@ -1,5 +1,6 @@
 import { createClient } from "@/utils/supabase/server";
 import { NoteItem } from "./NoteItem";
+import { Badge } from "@/components/ui/badge";
 
 export async function NotesList() {
   const supabase = await createClient();
@@ -16,6 +17,11 @@ export async function NotesList() {
   return (
     <>
       <div>
+        <div className="flex gap-3 pt-2 pb-4  ">
+          <Badge variant="outline">All</Badge>
+          <Badge variant="outline">Archived</Badge>
+          <Badge variant="outline">Important</Badge>
+        </div>
         <NoteItem notes={notes} />
       </div>
     </>
