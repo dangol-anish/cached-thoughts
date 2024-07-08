@@ -66,10 +66,13 @@ export function NoteCard({ notes }: { notes: Notes[] }) {
         notes.map((item: Notes) => (
           <Dialog key={item.note_id}>
             <DialogTrigger asChild>
-              <Card key={item.note_id} className="flex flex-col h-full mb-5">
+              <Card
+                key={item.note_id}
+                className="flex flex-col h-full mb-5 cursor-pointer"
+              >
                 <CardHeader>
                   <CardTitle className="flex justify-between items-center">
-                    <span>{item.note_title}</span>
+                    <span>{highlightShortener(item.note_title, 3)}</span>
                     <span className="text-sm font-light">
                       {new Date(item.inserted_at).toLocaleDateString()}
                     </span>
