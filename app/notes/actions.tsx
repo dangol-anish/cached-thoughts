@@ -33,4 +33,24 @@ export async function addNotes(formData: FormData) {
   revalidatePath("/notes");
 }
 
-export async function deleteJournal() {}
+export async function deleteNotes(note_id: number) {
+  const supabase = createClient();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  if (!user) {
+    throw new Error("User is not logged in");
+  }
+
+  const { error } = await supabase.from("notes").delete().match({
+    user_id: user.id,
+    note_id: note_id,
+  });
+
+  if (error) {
+    throw new Error(error.message);
+  }
+
+  revalidatePath("/notes");
+}

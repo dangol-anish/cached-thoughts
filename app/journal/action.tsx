@@ -44,8 +44,6 @@ export async function deleteJournal(journal_id: number) {
     data: { user },
   } = await supabase.auth.getUser();
 
-  console.log(user);
-
   if (!user) {
     throw new Error("User is not logged in");
   }

@@ -10,6 +10,13 @@ import {
 } from "@/components/ui/card";
 import { Archive, CircleAlert, EllipsisVertical } from "lucide-react";
 import { highlightShortener } from "@/utils/textShortener";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { deleteNotes } from "@/app/notes/actions";
 
 interface Notes {
   note_id: number;
@@ -30,6 +37,14 @@ export function NoteItem({ notes }: { notes: Notes[] }) {
 
 export function NoteCard({ notes }: { notes: Notes[] }) {
   const { pending } = useFormStatus();
+
+  const handleDelete = async (id: number) => {
+    try {
+      await deleteNotes(id);
+    } catch (error) {
+      console.error("Failed to delete notes", error);
+    }
+  };
 
   return (
     <div className="w-full pb-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 ">
@@ -55,7 +70,20 @@ export function NoteCard({ notes }: { notes: Notes[] }) {
               <span>{item.is_important ? <CircleAlert size={18} /> : ""}</span>
               <span>{item.is_archived ? <Archive size={18} /> : ""}</span>
               <span>
-                <EllipsisVertical size={18} />
+                <DropdownMenu>
+                  <DropdownMenuTrigger>
+                    <EllipsisVertical size={18} />
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent className="flex flex-col text-sm">
+                    <DropdownMenuItem
+                      className="hover:cursor-pointer"
+                      disabled={pending}
+                      onClick={() => handleDelete(item.note_id)}
+                    >
+                      Delete
+                    </DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
               </span>
             </CardFooter>
           </Card>
