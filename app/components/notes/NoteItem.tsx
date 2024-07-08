@@ -69,12 +69,10 @@ export function NoteCard({ notes }: { notes: Notes[] }) {
               <Card key={item.note_id} className="flex flex-col h-full mb-5">
                 <CardHeader>
                   <CardTitle className="flex justify-between items-center">
-                    <ScrollArea className="h-[55px] mb-5">
-                      <span className="text-sm font-light">
-                        {new Date(item.inserted_at).toLocaleDateString()}
-                      </span>
-                    </ScrollArea>
                     <span>{item.note_title}</span>
+                    <span className="text-sm font-light">
+                      {new Date(item.inserted_at).toLocaleDateString()}
+                    </span>
                   </CardTitle>
                 </CardHeader>
                 <CardContent className="flex-1 overflow-y-auto">
@@ -108,13 +106,14 @@ export function NoteCard({ notes }: { notes: Notes[] }) {
             </DialogTrigger>
             <DialogContent className="w-[90%] md:w-full">
               <DialogHeader>
-                <DialogTitle className="flex justify-between items-center py-4 ">
-                  {" "}
-                  <span>{item.note_title}</span>
-                  <span className="text-sm font-light">
-                    {new Date(item.inserted_at).toLocaleDateString()}
-                  </span>
-                </DialogTitle>
+                <ScrollArea>
+                  <DialogTitle className="w-full flex justify-between items-center py-4 ">
+                    <span>{item.note_title}</span>
+                    <span className="text-sm font-light">
+                      {new Date(item.inserted_at).toLocaleDateString()}
+                    </span>
+                  </DialogTitle>
+                </ScrollArea>
                 <DialogDescription>
                   <ScrollArea className="h-[300px]">
                     {item.note_description}
