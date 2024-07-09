@@ -16,7 +16,7 @@ export async function NotesList() {
 
   return (
     <>
-      <div>
+      <div className="w-full">
         <div className="flex gap-3 py-4   ">
           <Badge variant="outline">All</Badge>
           <Badge variant="outline">Archived</Badge>
