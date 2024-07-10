@@ -1,6 +1,5 @@
 "use client";
 import { useFormStatus } from "react-dom";
-
 import { Archive, CircleAlert, EllipsisVertical } from "lucide-react";
 import { highlightShortener } from "@/utils/textShortener";
 import {
@@ -9,7 +8,6 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-
 import {
   Dialog,
   DialogContent,
@@ -25,6 +23,7 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { NoteCardList } from "./NoteCardList";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
+import { EditNotes } from "./EditNotes";
 
 interface Notes {
   note_id: number;
@@ -35,7 +34,11 @@ interface Notes {
   inserted_at: string;
 }
 
-export function NoteItem({ notes }: { notes: Notes[] }) {
+interface NoteItemProps {
+  notes: Notes[];
+}
+
+export function NoteItem({ notes }: NoteItemProps) {
   return (
     <form className="w-full">
       <NoteCard notes={notes} />
@@ -43,7 +46,11 @@ export function NoteItem({ notes }: { notes: Notes[] }) {
   );
 }
 
-export function NoteCard({ notes }: { notes: Notes[] }) {
+interface NoteCardProps {
+  notes: Notes[];
+}
+
+export function NoteCard({ notes }: NoteCardProps) {
   const { pending } = useFormStatus();
 
   return (
@@ -54,41 +61,8 @@ export function NoteCard({ notes }: { notes: Notes[] }) {
         notes.map((item: Notes) => (
           <Dialog key={item.note_id}>
             <NoteCardList item={item} />
-
             <DialogContent className="w-[90%] md:w-full">
-              <DialogHeader className="w-full">
-                {/* <ScrollArea className="w-full"> */}
-                <DialogTitle className="flex w-full justify-between items-center py-4 ">
-                  <Input
-                    placeholder="Your Notes Title."
-                    id="notes_title"
-                    disabled={pending}
-                    minLength={3}
-                    value={item.note_title}
-                    name="notes_title"
-                    className="w-[80%]"
-                    required
-                  />
-                  <span className="text-sm font-light">
-                    {new Date(item.inserted_at).toLocaleDateString()}
-                  </span>
-                </DialogTitle>
-                {/* </ScrollArea> */}
-                <DialogDescription>
-                  <ScrollArea className="h-[300px]">
-                    <Textarea
-                      className="col-span-4 resize-none h-[300px]"
-                      placeholder="Type your notes here."
-                      disabled={pending}
-                      minLength={3}
-                      name="notes_description"
-                      value={item.note_description}
-                      required
-                    />
-                  </ScrollArea>
-                </DialogDescription>
-              </DialogHeader>
-
+              <EditNotes pending={pending} item={item} />
               <DialogFooter className="justify-end">
                 <DialogClose asChild>
                   <Button type="button" variant="outline">
