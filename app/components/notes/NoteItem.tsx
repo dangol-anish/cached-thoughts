@@ -23,6 +23,8 @@ import { DialogClose } from "@radix-ui/react-dialog";
 import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { NoteCardList } from "./NoteCardList";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
 
 interface Notes {
   note_id: number;
@@ -54,18 +56,35 @@ export function NoteCard({ notes }: { notes: Notes[] }) {
             <NoteCardList item={item} />
 
             <DialogContent className="w-[90%] md:w-full">
-              <DialogHeader>
-                <ScrollArea>
-                  <DialogTitle className="w-full flex justify-between items-center py-4 ">
-                    <span>{item.note_title}</span>
-                    <span className="text-sm font-light">
-                      {new Date(item.inserted_at).toLocaleDateString()}
-                    </span>
-                  </DialogTitle>
-                </ScrollArea>
+              <DialogHeader className="w-full">
+                {/* <ScrollArea className="w-full"> */}
+                <DialogTitle className="flex w-full justify-between items-center py-4 ">
+                  <Input
+                    placeholder="Your Notes Title."
+                    id="notes_title"
+                    disabled={pending}
+                    minLength={3}
+                    value={item.note_title}
+                    name="notes_title"
+                    className="w-[80%]"
+                    required
+                  />
+                  <span className="text-sm font-light">
+                    {new Date(item.inserted_at).toLocaleDateString()}
+                  </span>
+                </DialogTitle>
+                {/* </ScrollArea> */}
                 <DialogDescription>
                   <ScrollArea className="h-[300px]">
-                    {item.note_description}
+                    <Textarea
+                      className="col-span-4 resize-none h-[300px]"
+                      placeholder="Type your notes here."
+                      disabled={pending}
+                      minLength={3}
+                      name="notes_description"
+                      value={item.note_description}
+                      required
+                    />
                   </ScrollArea>
                 </DialogDescription>
               </DialogHeader>
