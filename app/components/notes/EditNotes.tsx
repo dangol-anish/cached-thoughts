@@ -7,6 +7,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Textarea } from "@/components/ui/textarea";
+import { useState } from "react";
 
 interface EditNotesProps {
   pending: boolean;
@@ -21,6 +22,27 @@ interface EditNotesProps {
 }
 
 export function EditNotes({ pending, item }: EditNotesProps) {
+  const [currentData, setCurrentData] = useState({
+    noteTitle: item.note_title,
+    noteDescription: item.note_description,
+  });
+
+  const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setCurrentData({
+      ...currentData,
+      noteTitle: e.target.value,
+    });
+  };
+
+  const handleDescriptionChange = (
+    e: React.ChangeEvent<HTMLTextAreaElement>
+  ) => {
+    setCurrentData({
+      ...currentData,
+      noteDescription: e.target.value,
+    });
+  };
+
   return (
     <>
       <DialogHeader className="w-full">
@@ -30,10 +52,11 @@ export function EditNotes({ pending, item }: EditNotesProps) {
             id="notes_title"
             disabled={pending}
             minLength={3}
-            value={item.note_title}
+            value={currentData.noteTitle}
             name="notes_title"
             className="w-[80%]"
             required
+            onChange={handleTitleChange}
           />
           <span className="text-sm font-light">
             {new Date(item.inserted_at).toLocaleDateString()}
@@ -48,8 +71,9 @@ export function EditNotes({ pending, item }: EditNotesProps) {
             disabled={pending}
             minLength={3}
             name="notes_description"
-            value={item.note_description}
+            value={currentData.noteDescription}
             required
+            onChange={handleDescriptionChange}
           />
         </ScrollArea>
       </DialogDescription>
