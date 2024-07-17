@@ -1,6 +1,7 @@
 import { createClient } from "@/utils/supabase/server";
-import { NoteItem } from "./NoteItem";
+// import { NoteItem } from "./NoteItem";
 import { Badge } from "@/components/ui/badge";
+import { NoteItem } from "./NoteItem";
 
 export async function NotesList() {
   const supabase = await createClient();

@@ -54,3 +54,39 @@ export async function deleteNotes(note_id: number) {
 
   revalidatePath("/notes");
 }
+
+export async function updateNotes(formData: FormData) {
+  const supabase = createClient();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  if (!user) {
+    throw new Error("User is not logged in");
+  }
+
+  const noteId = formData.get("noteId") as string | null;
+  const notesTitle = formData.get("noteTitle") as string | null;
+  const notesDescription = formData.get("noteDescription") as string | null;
+
+  if (!notesTitle || !notesDescription) {
+    throw new Error("All fields are required");
+  }
+
+  const { error } = await supabase
+    .from("notes")
+    .update({
+      note_title: notesTitle,
+      note_description: notesDescription,
+    })
+    .match({
+      user_id: user.id,
+      note_id: noteId,
+    });
+
+  if (error) {
+    throw new Error("Error updating task");
+  }
+
+  revalidatePath("/notes");
+}
