@@ -165,7 +165,8 @@ export function NoteCard({ notes }: NoteCardProps) {
                 ref={formRef}
                 action={async (data) => {
                   await updateNotes(data);
-                  wait().then(() => setOpen(false));
+                  await wait();
+                  setOpen(false);
                   formRef.current?.reset();
                 }}
               >
