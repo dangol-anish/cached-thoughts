@@ -17,6 +17,7 @@ import {
 import { deleteNotes } from "@/app/notes/actions";
 import { useFormStatus } from "react-dom";
 import { DialogTrigger } from "@/components/ui/dialog";
+import { ShowNotes } from "./ShowNotes";
 
 interface Notes {
   note_id: number;
@@ -66,6 +67,7 @@ export function NoteCardList({ item }: { item: Notes }) {
                   >
                     Delete
                   </DropdownMenuItem> */}
+                  <ShowNotes />
                 </DropdownMenuContent>
               </DropdownMenu>
             </span>
