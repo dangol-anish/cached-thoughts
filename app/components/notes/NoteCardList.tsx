@@ -29,13 +29,7 @@ interface Notes {
 
 export function NoteCardList({ item }: { item: Notes }) {
   const { pending } = useFormStatus();
-  const handleDelete = async (id: number) => {
-    try {
-      await deleteNotes(id);
-    } catch (error) {
-      console.error("Failed to delete notes", error);
-    }
-  };
+
   return (
     <>
       <DialogTrigger asChild>
@@ -65,13 +59,13 @@ export function NoteCardList({ item }: { item: Notes }) {
                   <EllipsisVertical size={18} />
                 </DropdownMenuTrigger>
                 <DropdownMenuContent className="flex flex-col text-sm">
-                  <DropdownMenuItem
+                  {/* <DropdownMenuItem
                     className="hover:cursor-pointer"
                     disabled={pending}
                     onClick={() => handleDelete(item.note_id)}
                   >
                     Delete
-                  </DropdownMenuItem>
+                  </DropdownMenuItem> */}
                 </DropdownMenuContent>
               </DropdownMenu>
             </span>

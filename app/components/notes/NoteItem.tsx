@@ -24,7 +24,7 @@ import { NoteCardList } from "./NoteCardList";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { useRef, useState } from "react";
-import { updateNotes } from "@/app/notes/actions";
+import { deleteNotes, updateNotes } from "@/app/notes/actions";
 
 interface Notes {
   note_id: number;
@@ -52,6 +52,14 @@ const wait = () => new Promise((resolve) => setTimeout(resolve, 300));
 interface NoteCardProps {
   notes: Notes[];
 }
+
+const handleDelete = async (id: number) => {
+  try {
+    await deleteNotes(id);
+  } catch (error) {
+    console.error("Failed to delete notes", error);
+  }
+};
 
 interface EditNotesProps {
   pending: boolean;
@@ -108,7 +116,7 @@ export function EditNotes({ pending, item }: EditNotesProps) {
           </span>
         </DialogTitle>
       </DialogHeader>
-      <DialogDescription>
+      <DialogDescription className="py-4">
         <ScrollArea className="h-[300px]">
           <Textarea
             className="col-span-4 resize-none h-[300px]"
@@ -123,9 +131,16 @@ export function EditNotes({ pending, item }: EditNotesProps) {
         </ScrollArea>
         <input type="hidden" name="noteId" value={currentData.noteId} />
       </DialogDescription>
-      <DialogFooter className="justify-end">
+      <DialogFooter className="justify-end ">
         <Button type="submit" disabled={pending}>
           Update
+        </Button>
+        <Button
+          className="hover:cursor-pointer"
+          disabled={pending}
+          onClick={() => handleDelete(item.note_id)}
+        >
+          Delete
         </Button>
       </DialogFooter>
     </>
@@ -153,8 +168,9 @@ export function NoteCard({ notes }: NoteCardProps) {
                   wait().then(() => setOpen(false));
                   formRef.current?.reset();
                 }}
-              ></form>
-              <EditNotes pending={pending} item={item} />
+              >
+                <EditNotes pending={pending} item={item} />
+              </form>
             </DialogContent>
           </Dialog>
         ))
