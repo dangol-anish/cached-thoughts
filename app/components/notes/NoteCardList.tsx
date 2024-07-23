@@ -67,7 +67,7 @@ export function NoteCardList({ item }: { item: Notes }) {
                   >
                     Delete
                   </DropdownMenuItem> */}
-                  <ShowNotes />
+                  <ShowNotes item={item} />
                 </DropdownMenuContent>
               </DropdownMenu>
             </span>
